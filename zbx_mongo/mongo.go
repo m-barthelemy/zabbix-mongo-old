@@ -82,7 +82,7 @@ func queryDB(request *g2z.AgentRequest) (string, error) {
     jsonParsed, err := gabs.ParseJSON([]byte(fmt.Sprintf("%s", json)))
 
     if err != nil {
-        g2z.LogErrorf("Gabs library could not parse JSONresult: %s", err)
+        g2z.LogErrorf("Gabs library could not parse JSON result: %s", err)
         return "", errors.New(fmt.Sprintf("%s", err))
     }
     

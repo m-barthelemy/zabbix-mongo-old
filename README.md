@@ -5,14 +5,74 @@ This plugin is an agent Loadable Module (https://www.zabbix.com/documentation/3.
 
 It can connect to a Mongo server, run basic queries and return a simple value usable by Zabbix server.
 
-We provide an XML template with a few useful example queries that you can import in your Zabbix server (Configuration -> Templates -> Import) .
+An XML template with a few useful example queries that you can import in your Zabbix server (Configuration -> Templates -> Import) is provided.
+
 
 
 ## Install
 
+So far the build has only been tested with Go 1.6
+
+The quickest and easiest way to build the project is to use GVM.
+
+### Prepare the Go environment
+Go >= 1.5 is required. But to install it we first need a working Go 1.4 compiler.
 
 
-## Configure
+ - Install GVM:
+
+   `bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)`
+
+ - Load GVM commands and environment:
+
+   `source ${HOME}/.gvm/scripts/gvm`
+
+ - Install Go 1.4
+
+   `gvm install go1.4`
+
+ - Enter the Go 1.4 env and install Go 1.6
+
+   `gvm use go1.4`
+
+    `export GOROOT_BOOTSTRAP=$GOROOT`
+
+ - Install a fresh Go 1.6 env:
+
+   `gvm install go1.6`
+   
+
+### Build the project
+ 
+ - Clone this repo, fetch Go dependencies, then build it:
+
+   ` git clone https://github.com/m-barthelemy/zabbix-mongo.git`
+
+   ` cd zabbix-mongo`
+
+   ` gvm use go1.6`
+
+   `go get gopkg.in/mgo.v2 gopkg.in/cavaliercoder/g2z.v3 github.com/Jeffail/gabs`
+
+   `make`
+
+
+If the build succeeds, it creates the `zbx_mongo.so` library, that can be loaded by the Zabbix agent.
+
+
+## Zabbix configuration
+
+Copy the built `zbx_mongo.so` to a server having a Zabbix Agent installed, for example into. You can place the module anywhere, `/etc/zabbix/zbx_mongo.so` for example.
+
+Edit the Agent configuration file (`/etc/zabbix/zabbix_agentd.conf`) to tell it where are the loadable modules and which ones should be loaded:
+
+    LoadModulePath=/etc/zabbix
+    LoadModule=zbx_mongo.so
+
+Now restart the Zabbix Agent. In its log file, you should see the confirmation that the zbx_mongo module has been successfully loaded:
+
+    4255:20160430:201554.976 using configuration file: /etc/zabbix/zabbix_agentd.conf
+    4255:20160430:201555.028 loaded modules: zbx_mongo.so
 
 
 ## Usage
@@ -23,14 +83,21 @@ The module is called by defining a regular Zabbix agent item :
 
 with:
 
- - `mongo_connection_url` : the Mongo URL to connect, authenticate, select the database:
 
- Format: [mongodb://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]
+### `mongo_connection_url `:
 
- Example: mongodb://127.0.0.1/mydb
+The Mongo URL to connect, authenticate, select the database:
+
+ Format: `[mongodb://][user:pass@]host1[:port1][,host2[:port2],...][/database][?options]`
+
+ Example: `mongodb://127.0.0.1/mydb`
  
 
- - `bson_query` : the query in the same format as `db.RunCommand()`. The query must be double-quoted, and internal quotes must be escaped using `\`
+
+
+### `bson_query`: 
+
+The query in the same format as `db.RunCommand()`. The query must be double-quoted, and internal quotes must be escaped using `\`
  
  Format: https://docs.mongodb.org/manual/reference/command/
 
@@ -45,7 +112,11 @@ get `dbStats()` : `"{\"dbStats\": 1}"`
 _Note: using `find` requires Mongo >= 3.2_
 
  
- - `wanted_value` : The value to pick from the result data. If empty, the complete result will be returned as a JSON string.
+
+
+### `wanted_value`:
+
+The value to pick from the result data. If empty, the complete result will be returned as a JSON string.
 
  Format: `property.subproperty`
  
@@ -55,4 +126,24 @@ _Note: using `find` requires Mongo >= 3.2_
  
      {"avgObjSize":0,"collections":0,"dataSize":0,"db":"test","fileSize":0,"indexSize":0,"indexes":0,"numExtents":0,"objects":0,"ok":1,"storageSize":0}
 
- If we want to get the value of the `objects` property, then `wanted_value` will be `objects`.
+ If we want to get the value of the `dataSize ` property, then `wanted_value` will be `dataSize `.
+
+
+## 
+
+
+####Complete example of a valid item key:
+
+`mongo.run[mongodb://127.0.0.1/myDb, "{\"dbStats\": 1}", dataSize]`
+
+
+## Roadmap / TODO
+ 
+ - Extract 1 item of a JSON array result. Currently there's no way to tell `wanted_value` to retrieve, for example, the first element of a result array (something like `property.subproperty[0]` won't work). Wish there was a "JSONPath for Go"...
+
+ - More documentation examples
+
+ - Discovery item `mongo.discover[....]` to have a super easy way to populate databases, collections in Zabbix and monitor them individually.
+
+ - XML Zabbix template improvements
+ 

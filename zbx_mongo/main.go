@@ -1,9 +1,7 @@
 package main 
 
-//import "github.com/cavaliercoder/g2z"
 
 import (
-//    "fmt"
     "strings"
     "gopkg.in/cavaliercoder/g2z.v3"
 )
