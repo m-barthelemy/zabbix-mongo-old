@@ -19,7 +19,7 @@ We provide an XML template with a few useful example queries that you can import
 
 The module is called by defining a regular Zabbix agent item :
 
-`mongo.query[<mongo_connection_url>,<bson_query>,<wanted_value>]`
+`mongo.run[<mongo_connection_url>,<bson_query>,<wanted_value>]`
 
 with:
 
