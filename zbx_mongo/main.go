@@ -17,5 +17,7 @@ func Echo(request *g2z.AgentRequest) (string, error) {
 func init() {
     g2z.RegisterStringItem("mongo.echo", "Hello world!", Echo)
     g2z.RegisterStringItem("mongo.run", "", queryDB)
+
+    g2z.RegisterDiscoveryItem("mongo.discover", "", discover)
 }
 

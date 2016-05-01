@@ -62,7 +62,7 @@ If the build succeeds, it creates the `zbx_mongo.so` library, that can be loaded
 
 ## Zabbix configuration
 
-Copy the built `zbx_mongo.so` to a server having a Zabbix Agent installed, for example into. You can place the module anywhere, `/etc/zabbix/zbx_mongo.so` for example.
+Copy the built `zbx_mongo.so` to a server having a Zabbix Agent installed, for example into `/etc/zabbix/zbx_mongo.so`.
 
 Edit the Agent configuration file (`/etc/zabbix/zabbix_agentd.conf`) to tell it where are the loadable modules and which ones should be loaded:
 
@@ -116,9 +116,9 @@ _Note: using `find` requires Mongo >= 3.2_
 
 ### `wanted_value`:
 
-The value to pick from the result data. If empty, the complete result will be returned as a JSON string.
+The path to the wanted value. If empty, the complete result will be returned as a JSON string. if the path points to something not being a simple value, the content is returned as a JSON string.
 
- Format: `property.subproperty`
+ Format: `/property/subproperty`
  
  Examples:
  
@@ -126,8 +126,11 @@ The value to pick from the result data. If empty, the complete result will be re
  
      {"avgObjSize":0,"collections":0,"dataSize":0,"db":"test","fileSize":0,"indexSize":0,"indexes":0,"numExtents":0,"objects":0,"ok":1,"storageSize":0}
 
- If we want to get the value of the `dataSize ` property, then `wanted_value` will be `dataSize `.
+ If we want to get the value of the `dataSize ` property, then `wanted_value` will be `/dataSize `.
 
+ If we want a single value from an array, we can fetch it by its index : `/path/to/array[0]`
+
+ More examples in the `zbx_mongo_template.xml` file.
 
 ## 
 
