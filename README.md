@@ -11,8 +11,9 @@ An XML template with a few useful example queries that you can import in your Za
 
 ## Install
 
-So far the build has only been tested with Go 1.6
+_Note: Until there's an easier way to distribute this module as a package, an **archive** containing the `.so` module (x86-64) and the XML template is available [here](https://share.zabbix.com/component/mtree/dir-libraries/zabbix-loadable-modules/mongodb-monitoring-loadable-module?Itemid=_)_
 
+Build: has only been tested with Go 1.6. 
 The quickest and easiest way to build the project is to use GVM.
 
 ### Prepare the Go environment
@@ -147,4 +148,3 @@ The path to the wanted value. If empty, the complete result will be returned as 
  - Discovery item `mongo.discover[....]` to have a super easy way to populate databases, collections in Zabbix and monitor them individually.
 
  - XML Zabbix template improvements
- 
