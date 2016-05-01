@@ -52,7 +52,7 @@ Go >= 1.5 is required. But to install it we first need a working Go 1.4 compiler
 
    ` gvm use go1.6`
 
-   `go get gopkg.in/mgo.v2 gopkg.in/cavaliercoder/g2z.v3 github.com/Jeffail/gabs`
+   `go get gopkg.in/mgo.v2 gopkg.in/cavaliercoder/g2z.v3 github.com/mattn/go-scan`
 
    `make`
 
@@ -137,13 +137,11 @@ The path to the wanted value. If empty, the complete result will be returned as 
 
 ####Complete example of a valid item key:
 
-`mongo.run[mongodb://127.0.0.1/myDb, "{\"dbStats\": 1}", dataSize]`
+`mongo.run[mongodb://127.0.0.1/myDb, "{\"dbStats\": 1}", /dataSize]`
 
 
 ## Roadmap / TODO
  
- - Extract 1 item of a JSON array result. Currently there's no way to tell `wanted_value` to retrieve, for example, the first element of a result array (something like `property.subproperty[0]` won't work). Wish there was a "JSONPath for Go"...
-
  - More documentation examples
 
  - Discovery item `mongo.discover[....]` to have a super easy way to populate databases, collections in Zabbix and monitor them individually.
