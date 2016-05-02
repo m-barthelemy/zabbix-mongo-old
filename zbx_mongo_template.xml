@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-05-02T11:58:30Z</date>
+    <date>2016-05-03T22:56:36Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -11,7 +11,9 @@
         <template>
             <template>MongoDB</template>
             <name>MongoDB</name>
-            <description>MongoDB Server Basic Monitoring</description>
+            <description>MongoDB Basic monitoring.&#13;
+&#13;
+Set the {$MGO_URL} macro at the host or template level if the MongoDB server is not localhost and/or requires authentication.</description>
             <groups>
                 <group>
                     <name>Templates</name>
@@ -24,12 +26,143 @@
             </applications>
             <items>
                 <item>
-                    <name>Connections per minute</name>
-                    <type>0</type>
+                    <name>Replica Set  - Member State</name>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/connections/totalCreated]</key>
+                    <key>mongo.run[{$MGO_URL},replSetGetStatus,&quot;{\&quot;replSetGetStatus\&quot;:1&quot;,/myState]</key>
+                    <delay>180</delay>
+                    <history>7</history>
+                    <trends>60</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description>Needs to connect to the &quot;admin&quot; database to work.</description>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>MongoDB - server</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Mongo Replicaset member state</name>
+                    </valuemap>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Replica Set - Name</name>
+                    <type>7</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:1}&quot;,/repl/setName]</key>
+                    <delay>1800</delay>
+                    <history>7</history>
+                    <trends>0</trends>
+                    <status>0</status>
+                    <value_type>1</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>MongoDB - server</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Current Connections</name>
+                    <type>7</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/connections/current]</key>
+                    <delay>120</delay>
+                    <history>7</history>
+                    <trends>60</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <delta>0</delta>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <formula>1</formula>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <data_type>0</data_type>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description>Mongo client connection to Mongo server per minute</description>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>MongoDB - server</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                </item>
+                <item>
+                    <name>Connections per minute</name>
+                    <type>7</type>
+                    <snmp_community/>
+                    <multiplier>0</multiplier>
+                    <snmp_oid/>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/connections/totalCreated]</key>
                     <delay>60</delay>
                     <history>7</history>
                     <trends>60</trends>
@@ -68,12 +201,12 @@
                 </item>
                 <item>
                     <name>Deletes per second</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/delete]</key>
-                    <delay>60</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/delete]</key>
+                    <delay>120</delay>
                     <history>7</history>
                     <trends>60</trends>
                     <status>0</status>
@@ -111,12 +244,12 @@
                 </item>
                 <item>
                     <name>Inserts per second</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/insert]</key>
-                    <delay>60</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/insert]</key>
+                    <delay>120</delay>
                     <history>7</history>
                     <trends>60</trends>
                     <status>0</status>
@@ -154,12 +287,12 @@
                 </item>
                 <item>
                     <name>Queries per second</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/query]</key>
-                    <delay>60</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/query]</key>
+                    <delay>120</delay>
                     <history>7</history>
                     <trends>60</trends>
                     <status>0</status>
@@ -197,12 +330,12 @@
                 </item>
                 <item>
                     <name>Updates per second</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/update]</key>
-                    <delay>60</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/update]</key>
+                    <delay>120</delay>
                     <history>7</history>
                     <trends>60</trends>
                     <status>0</status>
@@ -240,12 +373,12 @@
                 </item>
                 <item>
                     <name>Storage Engine</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/storageEngine/name]</key>
-                    <delay>900</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/storageEngine/name]</key>
+                    <delay>1800</delay>
                     <history>7</history>
                     <trends>0</trends>
                     <status>0</status>
@@ -284,55 +417,12 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                 </item>
                 <item>
                     <name>Server Version</name>
-                    <type>0</type>
+                    <type>7</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
                     <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/version]</key>
-                    <delay>900</delay>
-                    <history>7</history>
-                    <trends>0</trends>
-                    <status>0</status>
-                    <value_type>1</value_type>
-                    <allowed_hosts/>
-                    <units/>
-                    <delta>0</delta>
-                    <snmpv3_contextname/>
-                    <snmpv3_securityname/>
-                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
-                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
-                    <snmpv3_authpassphrase/>
-                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
-                    <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
-                    <params/>
-                    <ipmi_sensor/>
-                    <data_type>0</data_type>
-                    <authtype>0</authtype>
-                    <username/>
-                    <password/>
-                    <publickey/>
-                    <privatekey/>
-                    <port/>
-                    <description/>
-                    <inventory_link>0</inventory_link>
-                    <applications>
-                        <application>
-                            <name>MongoDB - server</name>
-                        </application>
-                    </applications>
-                    <valuemap/>
-                    <logtimefmt/>
-                </item>
-                <item>
-                    <name>Replica Set Name</name>
-                    <type>0</type>
-                    <snmp_community/>
-                    <multiplier>0</multiplier>
-                    <snmp_oid/>
-                    <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:1}&quot;,/repl/setName]</key>
-                    <delay>900</delay>
+                    <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/version]</key>
+                    <delay>1800</delay>
                     <history>7</history>
                     <trends>0</trends>
                     <status>0</status>
@@ -380,6 +470,18 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
             <screens/>
         </template>
     </templates>
+    <triggers>
+        <trigger>
+            <expression>{MongoDB:mongo.run[{$MGO_URL},replSetGetStatus,&quot;{\&quot;replSetGetStatus\&quot;:1&quot;,/myState].abschange()}&lt;&gt;0</expression>
+            <name>RS Member state changed to {ITEM.LASTVALUE}</name>
+            <url/>
+            <status>0</status>
+            <priority>2</priority>
+            <description/>
+            <type>0</type>
+            <dependencies/>
+        </trigger>
+    </triggers>
     <graphs>
         <graph>
             <name>MongoDB server - operations</name>
@@ -408,7 +510,7 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                     <type>0</type>
                     <item>
                         <host>MongoDB</host>
-                        <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/connections/totalCreated]</key>
+                        <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/connections/totalCreated]</key>
                     </item>
                 </graph_item>
                 <graph_item>
@@ -420,7 +522,7 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                     <type>0</type>
                     <item>
                         <host>MongoDB</host>
-                        <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/delete]</key>
+                        <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/delete]</key>
                     </item>
                 </graph_item>
                 <graph_item>
@@ -432,7 +534,7 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                     <type>0</type>
                     <item>
                         <host>MongoDB</host>
-                        <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/insert]</key>
+                        <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/insert]</key>
                     </item>
                 </graph_item>
                 <graph_item>
@@ -444,7 +546,7 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                     <type>0</type>
                     <item>
                         <host>MongoDB</host>
-                        <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/query]</key>
+                        <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/query]</key>
                     </item>
                 </graph_item>
                 <graph_item>
@@ -456,10 +558,58 @@ Should be either mmapV1 (&quot;older&quot; engine) or WiredTiger (preferred one 
                     <type>0</type>
                     <item>
                         <host>MongoDB</host>
-                        <key>mongo.run[{$MGO_URL},&quot;{\&quot;serverStatus\&quot;:1, \&quot;repl\&quot;:0}&quot;,/opcounters/update]</key>
+                        <key>mongo.run[{$MGO_URL},serverStatus,&quot;{\&quot;serverStatus\&quot;:1}&quot;,/opcounters/update]</key>
                     </item>
                 </graph_item>
             </graph_items>
         </graph>
     </graphs>
+    <value_maps>
+        <value_map>
+            <name>Mongo Replicaset member state</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>STARTUP</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>PRIMARY</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>SECONDARY</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>RECOVERING</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>STARTUP2</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>UNKNOWN</newvalue>
+                </mapping>
+                <mapping>
+                    <value>7</value>
+                    <newvalue>ARBITER</newvalue>
+                </mapping>
+                <mapping>
+                    <value>8</value>
+                    <newvalue>DOWN</newvalue>
+                </mapping>
+                <mapping>
+                    <value>9</value>
+                    <newvalue>ROLLBACK</newvalue>
+                </mapping>
+                <mapping>
+                    <value>10</value>
+                    <newvalue>REMOVED</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
 </zabbix_export>
+

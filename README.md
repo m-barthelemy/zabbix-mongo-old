@@ -80,12 +80,12 @@ Now restart the Zabbix Agent. In its log file, you should see the confirmation t
 
 The module is called by defining a regular Zabbix agent item :
 
-`mongo.run[<mongo_connection_url>,<bson_query>,<wanted_value>]`
+`mongo.run[<mongo_url>,<command>,<query>,<result_path>]`
 
 with:
 
 
-### `mongo_connection_url `:
+### `mongo_url `:
 
 The Mongo URL to connect, authenticate, select the database:
 
@@ -96,26 +96,32 @@ The Mongo URL to connect, authenticate, select the database:
 
 
 
-### `bson_query`: 
+### `command` and `query`: 
 
-The query in the same format as `db.RunCommand()`. The query must be double-quoted, and internal quotes must be escaped using `\`
+ - `command` is the command name such as `serverStatus`, `dbStats`, `find`, `count`,...
+
+ -  `query` is the complete JSON query (including command). It **must** be double-quoted, and internal quotes must be escaped using `\`
+
+     Its format closely follows the format of `db.RunCommand()`. See [MongoDB documentation](https://docs.mongodb.org/manual/reference/command/)
+
+
  
- Format: https://docs.mongodb.org/manual/reference/command/
+
 
  Examples:
 
-`find()` on the "colltest" collection: `"{\"find\": \"colltest\"}"`
+    `find()` on the "colltest" collection: `"{\"find\": \"colltest\"}"`
 
-`find()` on the "colltest" collection, only retrieve 1 document: `"{\"find\": \"colltest\", \"limit\": 1}"`
+    `find()` on the "colltest" collection, only retrieve 1 document: `"{\"find\": \"colltest\", \"limit\": 1}"`
 
-get `dbStats()` : `"{\"dbStats\": 1}"`
+    get `dbStats()` : `"{\"dbStats\": 1}"`
 
-_Note: using `find` requires Mongo >= 3.2_
+    _Note: using `find` requires Mongo >= 3.2_
 
  
 
 
-### `wanted_value`:
+### `result_path`:
 
 The path to the wanted value. If empty, the complete result will be returned as a JSON string. if the path points to something not being a simple value, the content is returned as a JSON string.
 
@@ -136,9 +142,11 @@ The path to the wanted value. If empty, the complete result will be returned as 
 ## 
 
 
-####Complete example of a valid item key:
+####Complete examples 
 
-`mongo.run[mongodb://127.0.0.1/myDb, "{\"dbStats\": 1}", /dataSize]`
+`mongo.run[mongodb://127.0.0.1/myDb, dbStats,  "{\"dbStats\": 1}", /dataSize]`
+
+`mongo.run[mongodb://127.0.0.1/myDb, serverStatus, "{\"serverStatus\":1, \"repl\":0, \"metrics\":0}",/connections/totalCreated]`
 
 
 ## Roadmap / TODO
