@@ -1,4 +1,4 @@
-[BROKEN] bu design due to Zabbix agent plugins loading limitations.
+[BROKEN] by design due to Zabbix agent plugins loading limitations.
 
 
 # zabbix-mongo
