@@ -1,5 +1,6 @@
 [BROKEN] by design due to Zabbix agent plugins loading limitations.
 
+
 # zabbix-mongo
 Zabbix agent (3.0) native plugin for Mongodb monitoring
 
