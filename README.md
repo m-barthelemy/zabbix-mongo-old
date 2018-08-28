@@ -9,6 +9,7 @@ It can connect to a Mongo server, run basic queries and return a simple value us
 
 An XML template with a few useful example queries that you can import in your Zabbix server (Configuration -> Templates -> Import) is provided.
 
+
 ## Install
 
 _Note: Until there's an easier way to distribute this module as a package, an **archive** containing a **already compiled** module (x86-64) and the XML template is available [here](https://share.zabbix.com/component/mtree/dir-libraries/zabbix-loadable-modules/mongodb-monitoring-loadable-module?Itemid=_)_
