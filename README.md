@@ -18,6 +18,7 @@ _Note: Until there's an easier way to distribute this module as a package, an **
 Build from source: has only been tested with Go 1.6. 
 The quickest and easiest way to build the project is to use GVM.
 
+
 ### Prepare the Go environment
 Go >= 1.5 is required. But to install it we first need a working Go 1.4 compiler.
 
